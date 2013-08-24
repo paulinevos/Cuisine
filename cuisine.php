@@ -26,9 +26,8 @@ if ( ! class_exists( 'Cuisine' ) ) {
  * Main Cuisine Class
  *
  * Contains the main functions for Cuisine, stores variables, and handles error messages
- * And starts up the whole shebang.
  *
- * @since Cuisine 1.0
+ * @since Cuisine 0.1
  */
 class Cuisine {
 

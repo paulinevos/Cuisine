@@ -29,6 +29,24 @@
 	}
 
 
+	/**************************************************/
+	/** Plugin Helpers ********************************/
+	/**************************************************/
+
+	function cuisine_register_rewrite( $slug, $type, $object = null, $template = null, $page_object = array() ){
+		global $cuisine;
+
+		$cuisine->plugins->register_new_url( $slug, $type, $object, $template, $page_object );
+	}
+
+
+	function cuisine_add_url( $slug, $type, $object = null, $template = null, $page_object = array() ){
+		global $cuisine;
+
+		$cuisine->plugins->register_new_url( $slug, $type, $object, $template, $page_object );
+	}
+
+
 
 	/**************************************************/
 	/** Theme Helpers *********************************/
@@ -110,6 +128,66 @@
 		return false;
 	}
 
+
+	/*
+	*	Check to see if this is a Cuisine overview page:
+	*/
+	function is_cuisine_page( $page ){
+
+		global $wp_query;
+
+		if( isset( $wp_query ) && !empty( $wp_query ) ){
+
+			if( isset( $wp_query->cuisine_slug ) && $wp_query->cuisine_slug == $page ){
+				return true;
+			}
+
+		}
+
+		if( is_page( $page ) ){
+			return true;
+		}
+
+		return false;
+
+	}
+
+
+	function cuisine_get_post_by_slug( $slug, $type = 'post' ){
+
+		if( $type != 'page' ){
+			
+			global $wpdb;
+
+         	
+			$args=array(
+				'name' => $slug,
+				'post_type' => $type,
+				'post_status' => 'publish',
+				'showposts' => 1,
+			);
+			
+			$posts = get_posts($args);
+
+         	if ( $posts )  
+            	return $posts[0]; 
+
+			
+			return null;
+
+		}else{
+
+			$page = get_page_by_path( $page_slug );
+
+			if ( $page )
+				return $page;
+			
+			return null;
+			
+		}
+
+	}
+
 	/**
 	*	Get post type:
 	*/
@@ -131,6 +209,15 @@
 
 		global $cuisine;
 		$cuisine->plugins->get_plugin_nonce();
+	}
+
+
+
+	/* Post Extras */
+	function cuisine_register_post_extra( $id, $label, $func, $js = array(), $priority = null, $args = array() ){
+		global $cuisine;
+		$cuisine->plugins->register_post_extra( $id, $label, $func, $js, $priority, $args );
+
 	}
 
 

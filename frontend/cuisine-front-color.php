@@ -1,4 +1,16 @@
 <?php
+/**
+ * Cuisine Front colors functions
+ * 
+ * Dus color calculations to optimize designs.
+ * Taken from WooCommerce by WooThemes.
+ *
+ * @author 		Chef du Web
+ * @category 	Front
+ * @package 	Cuisine
+ */
+
+
 
 if ( ! function_exists( 'cuisine_rgb_from_hex' ) ) {
 
